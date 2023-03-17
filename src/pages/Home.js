@@ -3,19 +3,20 @@ import { useState } from "react";
 const Home = () => {
 	const [searchText, setSearchText] = useState("");
 
-	const [games, setGames] = useState([
-		{ id: 1, name: "Jeux 1", rating: 4.6 },
-		{ id: 2, name: "Jeux 2", rating: 3.5 },
-		{ id: 3, name: "Jeux 3", rating: 4.2 },
-		{ id: 4, name: "Jeux 4", rating: 1.5 },
-		{ id: 5, name: "Jeux 5", rating: 3.7 },
-		{ id: 6, name: "Jeux 6", rating: 5 },
-	]);
+	const [games, setGames] = useState([]);
 
 	const handleSearch = () => {
-		alert("La recherche est lancée !");
+		const url = "https://www.formacitron.com/games-api-fallback/games/";
+		fetch(url)
+			.then((response) => response.json())
+			.then((data) => {
+				setGames(data.results);
+			})
+			.catch(() => {
+				alert("Une erreur est survenue");
+			});
 	};
-   
+
 	return (
 		<div className="container">
 			<div className="row mt-4">
@@ -30,19 +31,33 @@ const Home = () => {
 							}}
 							placeholder="Rechercher"
 						/>
-						<button className="btn btn-primary" type="button" onClick={handleSearch}>
+						<button
+							className="btn btn-primary"
+							type="button"
+							onClick={handleSearch}
+						>
 							Rechercher
 						</button>
 					</div>
-					{searchText}
 				</div>
 			</div>
 
 			<ul className="list-group">
 				{games.map((game) => (
 					<li className="list-group-item" key={game.id}>
-						<div className="h3">{game.name}</div>
-						<div>{game.rating}</div>
+						<div className="row">
+							<div className="col-2">
+								<img
+									src={game.background_image}
+									alt=""
+									className="img-fluid w-10"
+								/>
+							</div>
+                     <div className="col">
+							<div className="h3">{game.name}</div>
+							<div>{game.rating}</div>
+						</div>
+                  </div>
 					</li>
 				))}
 			</ul>
