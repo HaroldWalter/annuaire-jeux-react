@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 	const [searchText, setSearchText] = useState("");
@@ -7,7 +8,9 @@ const Home = () => {
 
 	const handleSearch = () => {
 		const apiKey = "b1c7381cdcf6480c974e4180affadf92";
-		const url = `https://api.rawg.io/api/games?key=${apiKey}&search=${encodeURI(searchText)}`;
+		const url = `https://api.rawg.io/api/games?key=${apiKey}&search=${encodeURI(
+			searchText
+		)}`;
 		fetch(url)
 			.then((response) => response.json())
 			.then((data) => {
@@ -46,19 +49,21 @@ const Home = () => {
 			<ul className="list-group">
 				{games.map((game) => (
 					<li className="list-group-item" key={game.id}>
-						<div className="row">
-							<div className="col-2">
-								<img
-									src={game.background_image}
-									alt=""
-									className="img-fluid w-10"
-								/>
+						<Link to={`/details/${game.slug}`}>
+							<div className="row">
+								<div className="col-2">
+									<img
+										src={game.background_image}
+										alt=""
+										className="img-fluid w-10"
+									/>
+								</div>
+								<div className="col">
+									<div className="h3">{game.name}</div>
+									<div>{game.rating}</div>
+								</div>
 							</div>
-							<div className="col">
-								<div className="h3">{game.name}</div>
-								<div>{game.rating}</div>
-							</div>
-						</div>
+						</Link>
 					</li>
 				))}
 			</ul>
