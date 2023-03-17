@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 const Home = () => {
+	const [searchText, setSearchText] = useState("");
+
 	const [games, setGames] = useState([
 		{ id: 1, name: "Jeux 1", rating: 4.6 },
 		{ id: 2, name: "Jeux 2", rating: 3.5 },
@@ -10,6 +12,10 @@ const Home = () => {
 		{ id: 6, name: "Jeux 6", rating: 5 },
 	]);
 
+	const handleSearch = () => {
+		alert("La recherche est lancée !");
+	};
+   
 	return (
 		<div className="container">
 			<div className="row mt-4">
@@ -19,12 +25,16 @@ const Home = () => {
 							type="text"
 							className="form-control"
 							autoFocus={true}
+							onChange={(e) => {
+								setSearchText(e.target.value);
+							}}
 							placeholder="Rechercher"
 						/>
-						<button className="btn btn-primary" type="button">
+						<button className="btn btn-primary" type="button" onClick={handleSearch}>
 							Rechercher
 						</button>
 					</div>
+					{searchText}
 				</div>
 			</div>
 
