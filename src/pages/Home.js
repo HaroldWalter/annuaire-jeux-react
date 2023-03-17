@@ -6,7 +6,8 @@ const Home = () => {
 	const [games, setGames] = useState([]);
 
 	const handleSearch = () => {
-		const url = "https://www.formacitron.com/games-api-fallback/games/";
+		const apiKey = "b1c7381cdcf6480c974e4180affadf92";
+		const url = `https://api.rawg.io/api/games?key=${apiKey}&search=${encodeURI(searchText)}`;
 		fetch(url)
 			.then((response) => response.json())
 			.then((data) => {
@@ -53,11 +54,11 @@ const Home = () => {
 									className="img-fluid w-10"
 								/>
 							</div>
-                     <div className="col">
-							<div className="h3">{game.name}</div>
-							<div>{game.rating}</div>
+							<div className="col">
+								<div className="h3">{game.name}</div>
+								<div>{game.rating}</div>
+							</div>
 						</div>
-                  </div>
 					</li>
 				))}
 			</ul>
